@@ -14,7 +14,7 @@ When tokens are signed using public/private key pairs, the signature also certif
 
 # 
 
-### When should you use JSON Web Tokes?
+### When should you use JSON Web Tokens?
 
 1. Authorization
 
@@ -25,4 +25,7 @@ When tokens are signed using public/private key pairs, the signature also certif
 2. Information Exchange
 
     * Signature is calculated using the header and the payload, you can also verify that the content hasn't been tampered with.
-    * JWTs can be signed—for example, using public/private key pairs—you can be sure the senders are who they say they ar
+    * JWTs can be signed—for example, using public/private key pairs—you can be sure the senders are who they say they are.
+
+#
+
