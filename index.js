@@ -4,24 +4,15 @@ const jwt = require("jsonwebtoken");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-const Users = [
-  {
-    id: "user-1",
-    name: "John",
-    email: "john@gmail.com",
-    password: "@john",
-  },
-  {
-    id: "user-2",
-    name: "Joe",
-    email: "joe@gmail.com",
-    password: "@joe",
-  },
-];
+const authRoutes = require("./auth");
+
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
+
+app.use(authRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
