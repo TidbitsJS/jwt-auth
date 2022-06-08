@@ -123,4 +123,25 @@ router.get("/user/:userId", auth, (req, res) => {
   }
 });
 
+router.get("/users", auth, (req, res) => {
+  try {
+    const users = Users.map((user) => {
+      return {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      };
+    });
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        users,
+      },
+    });
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+});
+
 module.exports = router;
