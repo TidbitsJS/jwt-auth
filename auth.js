@@ -13,6 +13,14 @@ const verifyToken = (req, res, next) => {
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // check if expired
+    if (decoded.exp < Date.now() / 1000) {
+      return res.status(401).json({
+        message: "Token has expired",
+      });
+    }
+
     req.user = decoded;
     next();
   } catch (err) {

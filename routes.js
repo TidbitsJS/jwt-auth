@@ -21,7 +21,7 @@ const Users = [
 ];
 
 function generateToken(token) {
-  return jwt.sign(token, process.env.JWT_SECRET, { expiresIn: "30d" });
+  return jwt.sign(token, process.env.JWT_SECRET, { expiresIn: 120 });
 }
 
 const router = express.Router();
