@@ -83,3 +83,86 @@ When tokens are signed using public/private key pairs, the signature also certif
    - JWTs can be signed—for example, using public/private key pairs—you can be sure the senders are who they say they are.
 
 #
+
+### JSON Web Token structure
+
+In its compact form, JSON Web Tokens consist of three parts separated by dots (.), which are:
+
+- Header
+- Payload
+- Signature
+
+Therefore, a JWT typically looks like the following.
+
+```shell
+xxxxx.yyyyy.zzzzz
+```
+
+1. Header
+
+   A JSON object that contains information about the token.
+
+   Always the first part of the JWT.
+
+   Consists of two parts:
+
+   1. type of token ( jwt )
+
+   2. signing algorithm ( HMAC SHA256 or rsa )
+
+   For example:
+
+   ```json
+   {
+     "alg": "HS256",
+     "typ": "JWT"
+   }
+   ```
+
+   Then, this JSON is Base64Url encoded to form the first part of the JWT.
+
+2. Paylod
+
+   Contains the claims of the token. Claims are statements about an entity (typically, the user) and additional data.
+
+   Three types of claims:
+
+   1. Registered claims
+
+      Set of predefined claims which are not mandatory but recommended, to provide a set of useful, interoperable claims.
+
+      Some of them are: iss(issuer), exp(expiration time), sub(subject), aud(audience)
+
+   2. Public claims
+
+      These can be defined at will by those using JWTs
+
+      To avoid collisions they should be defined in the IANA JSON Web Token Registry or be defined as a URI that contains a collision resistant namespace.
+
+   3. Private claims
+
+      Custom claims created to share information between parties that agree on using them and are neither registered or public claims.
+
+For example:
+
+```json
+{
+  "sub": "1234567890",
+  "name": "John Doe",
+  "admin": true
+}
+```
+
+3. Signature
+
+   To create the signature part you have to take the encoded header, the encoded payload, a secret, the algorithm specified in the header, and sign that.
+
+   For example if you want to use the HMAC SHA256 algorithm, the signature will be created in the following way:
+
+   ```javascript
+   HMACSHA256(base64UrlEncode(header) + "." + base64UrlEncode(payload), secret);
+   ```
+
+   Used to verify the message wasn't changed along the way
+
+   In the case of tokens signed with a private key, it can also verify that the sender of the JWT is who it says it is.
