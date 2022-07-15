@@ -10,6 +10,7 @@ import {
   Error,
   Register,
   ResetPassword,
+  PrivateRoute,
 } from "./pages";
 import { useGlobalContext } from "./context";
 
@@ -31,7 +32,14 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <PrivateRoute
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/user/reset-password" element={<ResetPassword />} />
         <Route path="*" element={<Error />} />
