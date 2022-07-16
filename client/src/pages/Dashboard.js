@@ -1,15 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 
+import { useGlobalContext } from "../context";
+
 const Dashboard = () => {
+  const { user } = useGlobalContext();
+  const { name, userId, role } = user;
+
   return (
     <Wrapper className="page">
-      <h2>Hello there, user</h2>
+      <h2>Hello there, {name}</h2>
       <p>
-        Your ID : <span>3456</span>
+        Your ID : <span>{userId}</span>
       </p>
       <p>
-        Your Role : <span>Role</span>
+        Your Role : <span>{role}</span>
       </p>
     </Wrapper>
   );
