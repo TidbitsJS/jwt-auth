@@ -1,24 +1,60 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
 
 import { FormRow } from "../components";
+import { useGlobalContext } from "../context";
+import { useLocalState } from "../utils";
 
 const Login = () => {
+  const { saveUser } = useGlobalContext();
   const [values, setValues] = useState({
     email: "",
     password: "",
   });
 
+  const { alert, showAlert, loading, setLoading, hideAlert } = useLocalState();
+
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    hideAlert();
+    setLoading(true);
+
+    const { email, password } = values;
+    const loginUser = { email, password };
+
+    try {
+      const { data } = await axios.post("/api/v1/auth/login", loginUser);
+
+      setValues({ name: "", email: "", password: "" });
+      showAlert({
+        text: `Welcome ${data.user.name}. Redirecting to dashboard...`,
+        type: "success",
+      });
+
+      saveUser(data.user);
+    } catch (error) {
+      showAlert({ text: error.response.data.msg });
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Wrapper className="page">
-      <div className={`alert`}>Alert text</div>
-
-      <form className="form form-loading">
+      {alert.show && (
+        <div className={`alert alert-${alert.type}`}>{alert.text}</div>
+      )}
+      <form
+        className={loading ? "form form-loading" : "form"}
+        onSubmit={onSubmit}
+      >
         <FormRow
           type="email"
           name="email"
@@ -33,8 +69,8 @@ const Login = () => {
           handleChange={handleChange}
         />
 
-        <button type="submit" className="btn btn-block">
-          Login
+        <button type="submit" className="btn btn-block" disabled={loading}>
+          {loading ? "Loading..." : "Login"}
         </button>
 
         <p>
