@@ -8,6 +8,7 @@ import { useGlobalContext } from "../context";
 import { useLocalState } from "../utils";
 
 const Login = () => {
+  const navigate = useNavigate();
   const { saveUser } = useGlobalContext();
   const [values, setValues] = useState({
     email: "",
@@ -38,6 +39,7 @@ const Login = () => {
       });
 
       saveUser(data.user);
+      navigate("/dashboard");
     } catch (error) {
       showAlert({ text: error.response.data.msg });
       setLoading(false);
