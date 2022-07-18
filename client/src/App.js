@@ -11,6 +11,7 @@ import {
   Register,
   ResetPassword,
   PrivateRoute,
+  Verify,
 } from "./pages";
 import { useGlobalContext } from "./context";
 
@@ -41,6 +42,7 @@ const App = () => {
           }
         />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/user/verify-email" element={<Verify />} />
         <Route path="/user/reset-password" element={<ResetPassword />} />
         <Route path="*" element={<Error />} />
       </Routes>
