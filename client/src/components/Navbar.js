@@ -3,18 +3,25 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import { logo } from "../assets";
+import { useGlobalContext } from "../context";
 
 const Navbar = () => {
+  const { user, logoutUser } = useGlobalContext();
+
   return (
     <Wrapper>
       <div className="nav-center">
         <Link to="/" className="home-link">
           <img src={logo} alt="jwt_auth" className="logo" />
         </Link>
-        <div className="nav-links">
-          <p>hello, Tidbits</p>
-          <button className="btn btn-small">logout</button>
-        </div>
+        {user && (
+          <div className="nav-links">
+            <p>hello, {user.name}</p>
+            <button className="btn btn-small" onClick={() => logoutUser()}>
+              logout
+            </button>
+          </div>
+        )}
       </div>
     </Wrapper>
   );
