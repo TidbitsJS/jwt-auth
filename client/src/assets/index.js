@@ -1,2 +1,4 @@
-export { default as logo } from "./assets/logo.svg";
-export { default as main } from "./assets/main.svg";
+import logo from "./logo.svg";
+import main from "./main.svg";
+
+export { logo, main };
