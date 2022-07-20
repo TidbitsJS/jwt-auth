@@ -51,8 +51,6 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  console.log("login");
-
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -66,20 +64,26 @@ const login = async (req, res) => {
   }
 
   const isPasswordCorrect = await user.comparePassword(password);
+
   if (!isPasswordCorrect) {
     throw new CustomError.UnauthenticatedError("Invalid Credentials");
   }
 
   if (!user.isVerified) {
-    throw new CustomError.UnauthenticatedError("Please verify your account");
+    throw new CustomError.UnauthenticatedError("Please verify your email");
   }
 
   const tokenUser = createTokenUser(user);
+
+  // create refresh token
   let refreshToken = "";
+  // check for existing token
   const existingToken = await Token.findOne({ user: user._id });
+  console.log("Existing Token", existingToken);
 
   if (existingToken) {
     const { isValid } = existingToken;
+
     if (!isValid) {
       throw new CustomError.UnauthenticatedError("Invalid Credentials");
     }
@@ -95,8 +99,11 @@ const login = async (req, res) => {
   const ip = req.ip;
   const userToken = { refreshToken, ip, userAgent, user: user._id };
 
+  console.log("User Token", userToken);
+
   await Token.create(userToken);
-  attachCookiesToResponse({ res, user: userToken, refreshToken });
+
+  attachCookiesToResponse({ res, user: tokenUser, refreshToken });
 
   res.status(StatusCodes.OK).json({ user: tokenUser });
 };
@@ -119,7 +126,11 @@ const logout = async (req, res) => {
 
 const verifyEmail = async (req, res) => {
   const { verificationToken, email } = req.body;
+  console.log("Verify Email", verificationToken, email);
+
   const user = await User.findOne({ email });
+
+  console.log("Verified User", user);
 
   if (!user) {
     throw new CustomError.UnauthenticatedError("Verification Failed");

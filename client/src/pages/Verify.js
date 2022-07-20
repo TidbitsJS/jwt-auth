@@ -21,8 +21,11 @@ const Verify = () => {
 
   const verifyToken = async () => {
     setLoading(true);
+
+    console.log(query.get("token"), query.get("email"));
+
     try {
-      const { data } = await axios.post(`${url}/api/v1/auth/verify-token`, {
+      const { data } = await axios.post(`${url}/api/v1/auth/verify-email`, {
         verificationToken: query.get("token"),
         email: query.get("email"),
       });
