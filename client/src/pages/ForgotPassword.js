@@ -4,7 +4,7 @@ import styled from "styled-components";
 import axios from "axios";
 
 import { FormRow } from "../components";
-import { useLocalState } from "../utils";
+import { useLocalState, url } from "../utils";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -35,7 +35,7 @@ const ForgotPassword = () => {
     }
 
     try {
-      const { data } = await axios.post(`/api/v1/auth/forgot-password`, {
+      const { data } = await axios.post(`${url}/api/v1/auth/forgot-password`, {
         email,
       });
 

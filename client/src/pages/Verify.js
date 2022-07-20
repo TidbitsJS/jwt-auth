@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
 import { useGlobalContext } from "../context";
+import { url } from "../utils";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -20,10 +22,12 @@ const Verify = () => {
   const verifyToken = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.post("/api/v1/auth/verify-token", {
+      const { data } = await axios.post(`${url}/api/v1/auth/verify-token`, {
         verificationToken: query.get("token"),
         email: query.get("email"),
       });
+
+      console.log(data);
     } catch (error) {
       setError(true);
     } finally {

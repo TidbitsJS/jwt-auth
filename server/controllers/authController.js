@@ -34,7 +34,9 @@ const register = async (req, res) => {
     verificationToken,
   });
 
-  const origin = `${req.protocol}://${req.get("host")}`;
+  const origin = "http://localhost:3000";
+
+  console.log("Registered ", user);
 
   await sendVerificationEmail({
     name: user.name,
@@ -49,6 +51,8 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
+  console.log("login");
+
   const { email, password } = req.body;
 
   if (!email || !password) {

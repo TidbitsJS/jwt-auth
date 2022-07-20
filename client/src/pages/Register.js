@@ -4,7 +4,7 @@ import styled from "styled-components";
 import axios from "axios";
 
 import { FormRow } from "../components";
-import { useLocalState } from "../utils";
+import { url, useLocalState } from "../utils";
 
 const Register = () => {
   const [values, setValues] = useState({
@@ -37,14 +37,17 @@ const Register = () => {
 
     try {
       const { data } = await axios.post(
-        `/api/v1/auth/register`,
+        `${url}/api/v1/auth/register`,
         registerNewUser
       );
+
+      console.log(data);
 
       setSuccess(true);
       showAlert({ text: data.msg, type: "success" });
     } catch (error) {
       const { msg } = error.response.data;
+      console.log("Something went wrong:", msg);
       showAlert({ text: msg || "There was an error" });
     } finally {
       setValues({ name: "", email: "", password: "" });
