@@ -7,9 +7,13 @@ const AppContext = React.createContext();
 export const AppProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const saveUser = (user) => {
+    setUser(user);
+  };
 
-  const saveUser = (user) => setUser(user);
-  const removeUser = () => setUser(null);
+  const removeUser = () => {
+    setUser(null);
+  };
 
   const fetchUser = async () => {
     try {
@@ -17,14 +21,13 @@ export const AppProvider = ({ children }) => {
       saveUser(data.user);
     } catch (error) {
       removeUser();
-    } finally {
-      setIsLoading(false);
     }
+    setIsLoading(false);
   };
 
   const logoutUser = async () => {
     try {
-      await axios.delete(`/api/v1/auth/logout`);
+      await axios.delete("/api/v1/auth/logout");
       removeUser();
     } catch (error) {
       console.log(error);
