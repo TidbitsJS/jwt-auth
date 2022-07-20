@@ -5,7 +5,6 @@ import styled from "styled-components";
 import axios from "axios";
 
 import { useGlobalContext } from "../context";
-import { url } from "../utils";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -25,7 +24,7 @@ const Verify = () => {
     console.log(query.get("token"), query.get("email"));
 
     try {
-      const { data } = await axios.post(`${url}/api/v1/auth/verify-email`, {
+      const { data } = await axios.post(`/api/v1/auth/verify-email`, {
         verificationToken: query.get("token"),
         email: query.get("email"),
       });

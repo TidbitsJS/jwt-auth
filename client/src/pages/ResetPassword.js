@@ -4,7 +4,7 @@ import styled from "styled-components";
 import axios from "axios";
 
 import { FormRow } from "../components";
-import { url, useLocalState } from "../utils";
+import { useLocalState } from "../utils";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -33,7 +33,7 @@ const ResetPassword = () => {
     }
 
     try {
-      const { data } = await axios.post(`${url}/api/v1/auth/reset-password`, {
+      const { data } = await axios.post(`/api/v1/auth/reset-password`, {
         password,
         token: query.get("token"),
         email: query.get("email"),
