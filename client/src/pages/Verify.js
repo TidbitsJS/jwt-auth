@@ -29,6 +29,7 @@ const Verify = () => {
 
       console.log(data);
     } catch (error) {
+      console.log("Something went wrong verifying token");
       setError(true);
     } finally {
       setLoading(false);
