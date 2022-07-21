@@ -15,7 +15,7 @@ const Home = () => {
         <div className="info">
           <div className="info_text">
             <h2>
-              <span>Auth</span> Workflow
+              <span>JWT</span> Auth
             </h2>
 
             <p>

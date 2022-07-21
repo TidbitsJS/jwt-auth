@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-import { logo } from "../assets";
+import { jwtLogo } from "../assets";
 import { useGlobalContext } from "../context";
 
 const Navbar = () => {
@@ -12,7 +12,7 @@ const Navbar = () => {
     <Wrapper>
       <div className="nav-center">
         <Link to="/" className="home-link">
-          <img src={logo} alt="jwt_auth" className="logo" />
+          <img src={jwtLogo} alt="jwt_auth" className="logo" />
         </Link>
         {user && (
           <div className="nav-links">
@@ -29,7 +29,7 @@ const Navbar = () => {
 
 const Wrapper = styled.nav`
   background: var(--white);
-  height: 6rem;
+  height: 5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -53,6 +53,11 @@ const Wrapper = styled.nav`
   .home-link {
     display: flex;
     align-items: flex-end;
+  }
+  .logo {
+    width: 150px;
+    height: 50px;
+    object-fit: contain;
   }
   @media (min-width: 776px) {
     .nav-links {
