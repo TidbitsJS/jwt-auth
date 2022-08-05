@@ -28,3 +28,66 @@ A complete auth application created using the MERN stack. This application has a
 5. Node-Mailer
 
    code: [server](./server)
+
+
+## Setup
+
+Project requirements
+
+- git
+- NodeJS
+- NPM
+
+To verify the installation of above, you can run this:
+
+```shell
+  git --version
+  node --version
+  npm --version
+```
+
+After you've made sure to have the correct things installed, you should be able to just run a few commands to get set up:
+
+1. Clone the repo
+
+```shell
+  https://github.com/TidbitsJS/jwt-auth.git
+  cd jwt-auth
+```
+
+2. Install node modules 
+
+```shell
+  cd client
+  npm install
+  
+  cd server
+  npm install
+```
+
+3. Setup a new project on [MongoDB](https://www.mongodb.com/) platform
+4. Store the MonoDB URL in env file of server folder
+
+```text
+MONGO_URL=mongodb+srv://<username>:<password>@cluster0.eqcqa.mongodb.net/plants?retryWrites=true&w=majority
+```
+
+
+## Run
+
+To run the server:
+
+```shell
+  cd server
+  npm run dev
+```
+
+To run the client:
+
+```shell
+  cd client
+  npm start
+```
+
+Server will start on port 5000 while client will on port 3000
+
